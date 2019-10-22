@@ -1,0 +1,45 @@
+<main id="mainContent">
+  <div class="jumbotron">
+    <div class="container text-muted">
+      <h2>Your Favorite movies</h2>
+    </div>
+  </div>
+  
+  <div class="container py-3">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white mb-0">
+          <li class="breadcrumb-item">
+            <a class="breadCrumbLink" [routerLink]="['/movies']">
+              Movies
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            favorites
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row py-5">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let movie of favoriteMovies">
+        <div class="card">
+          <img [src]="movie.imageUrl" class="card-img-top" alt="placeholder image" />
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <h6 class="card-subtitle text-muted my-2">
+              Release year: {{ movie.date }}
+            </h6>
+            <p class="card-text py-3">
+              {{ movie.short_description }}
+            </p>
+            <a (click)="toggleVote(movie)" [class.text-danger]='movieInFavorites(movie)'>
+              <i class="material-icons">favorite</i> 
+            </a>
+            <a [routerLink]="['/movies', movie.slug]" class="card-link  float-right">see more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="favoriteMovies.length === 0" class="text-center py-3 text-info">You have not selected any movie as your favorite</p>
+  </div>
+</main>

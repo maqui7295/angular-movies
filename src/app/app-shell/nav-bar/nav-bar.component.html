@@ -1,0 +1,34 @@
+﻿<div class="skipLink">
+  <a [href]="skipLinkPath">Skip to Main Content</a>
+</div>
+<nav
+  class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between"
+>
+  <a class="navbar-brand" routerLink="/">
+    Best Movies
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" routerLink="/">
+        Home
+      </a>
+      <a class="nav-item nav-link" routerLink="/movies/favorites">
+        Favorites
+      </a>
+      <!-- <a class="nav-item nav-link active" routerLink="/list">
+      Contact
+    </a> -->
+    </div>
+  </div>
+</nav>

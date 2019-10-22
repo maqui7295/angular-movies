@@ -1,0 +1,62 @@
+<main>
+  <div class="jumbotron">
+    <div class="container text-muted">
+      <h2>{{ movie?.title }}</h2>
+    </div>
+  </div>
+  <div class="container py-5">
+    <div class="row heading">
+      <div class="col-6">
+        <img [src]="movie?.imageUrlLarge" [alt]="movie?.title" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mt-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-white mb-0">
+            <li class="breadcrumb-item">
+              <a class="breadCrumbLink" [routerLink]="['/movies']">
+                Movies
+              </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{ movie?.slug }}
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-md-8 col-12 ml-3 mb-5">
+        <p class="text-capitalize text-secondary">
+          <strong>Movie title:</strong> {{ movie?.title }}
+        </p>
+        <p class="title text-secondary">
+          <strong>Released Date:</strong> {{ movie?.date }} <br />
+          <strong>Runtime:</strong> {{ movie?.runtime }} <br />
+          <strong>Genre:</strong> {{ movie?.genre }} <br /><strong
+            >Language:</strong
+          >
+          {{ movie?.language }} <br />
+          <strong>Country:</strong> {{ movie?.country }}
+        </p>
+        <p class="title text-secondary">
+          Rated:
+          <i class="material-icons">star</i>
+          <i class="material-icons">star</i>
+          <i class="material-icons">star</i>
+          <i class="material-icons">star</i>
+          <i class="material-icons">starhalf</i>
+        </p>
+        <p class="description">
+          <strong>Description:</strong> {{ movie?.short_description }}
+        </p>
+        <p class="plot"><strong>Plot:</strong> {{ movie?.plot }}</p>
+
+        <p class="plot"><strong>Director:</strong> {{ movie?.director }}</p>
+        <p class="plot"><strong>Writer:</strong> {{ movie?.writer }}</p>
+        <p class="plot">
+          <strong>Actors:</strong> {{ movie?.actors.join(', ') }}
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
