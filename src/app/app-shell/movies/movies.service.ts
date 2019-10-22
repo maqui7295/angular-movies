@@ -10,6 +10,7 @@ export interface IMovie {
   title: string;
   slug?: string;
   imageUrl?: string;
+  imageUrlLarge?: string,
   date: string;
   short_description?: string;
   description: string;
