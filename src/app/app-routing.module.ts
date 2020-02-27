@@ -3,10 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: '/movies', pathMatch: 'full' },
+  // {
+  //   path: 'movies',
+  //   loadChildren: () =>
+  //     import('./app-shell/movies/movies.module').then(mod => mod.MoviesModule)
+  // },
   {
     path: 'movies',
-    loadChildren: () =>
-      import('./app-shell/movies/movies.module').then(mod => mod.MoviesModule)
+    loadChildren: './app-shell/movies/movies.module#MoviesModule'
   }
 ];
 
