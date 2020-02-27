@@ -13,6 +13,7 @@ export class MoviesComponent implements OnInit {
   movies: IMovie[];
   filteredMovies: IMovie[];
   sortedMovies: IMovie[];
+  actors;
 
   // tslint:disable-next-line: variable-name
   _listFilter: string;
@@ -58,6 +59,7 @@ export class MoviesComponent implements OnInit {
   ngOnInit() {
     this.movies = this.filteredMovies = this.mvService.getAllMovies();
     this.favoriteMovies = this.mvService.getFavorites();
+    this.actors = this.mvService.actors;
   }
 
   toggleVote(movie: IMovie): any {

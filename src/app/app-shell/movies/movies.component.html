@@ -31,7 +31,7 @@
           <label for="sortbyactors">Sort by actor</label>
           <select name="sortbyactors" class="form-control" id="sortbyactors" [(ngModel)]="sortByActor">
             <option value="" selected aria-selected="true" [disabled]="true">Filter movies by actors</option>
-            <option value="{{ actor }}" *ngFor="let actor of mvService.actors" aria-selected="false">{{ actor }}
+            <option value="{{ actor }}" *ngFor="let actor of actors" aria-selected="false">{{ actor }}
             </option>
           </select>
         </div>
