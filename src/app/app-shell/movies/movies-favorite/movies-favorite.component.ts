@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MoviesService, IMovie } from '../movies.service';
+import { MoviesService } from '../movies.service';
+import { IMovie } from '../sampleData';
 
 @Component({
   selector: 'app-movies-favorite',

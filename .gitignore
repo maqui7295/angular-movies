@@ -6,6 +6,8 @@
 # production
 /server/build
 
+/server
+
 
 # testing
 /coverage

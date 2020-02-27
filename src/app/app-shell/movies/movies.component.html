@@ -7,29 +7,41 @@
   <div class="container py-5">
     <div class="row mb-3">
       <!-- <div class="col"><h2>List of movies</h2></div> -->
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-4 my-2">
         <div>
-          <input
-            [(ngModel)]="listFilter"
-            type="text"
-            class="form-control"
-            placeholder="search for a movie via its title"
-          />
+          <label for="titlefilter">Filter by title</label>
+          <input [(ngModel)]="listFilter" type="text" class="form-control"
+            placeholder="search for a movie via its title" id="titlefilter" />
+        </div>
+      </div>
+      <div class="col-12 col-md-4 my-2">
+        <div>
+          <label for="sortby">Sort by year and rating</label>
+          <select name="sortby" class="form-control" id="sortby" [(ngModel)]="sortBy">
+            <option value="" [disabled]="true">Sort movies by</option>
+            <option value="year_asc">Year - ascending</option>
+            <option value="year_desc">Year - descending</option>
+            <option value="rating_asc">rating - lowest to highest</option>
+            <option value="rating_desc">rating - highest to lowest</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 my-2">
+        <div>
+          <label for="sortbyactors">Sort by actor</label>
+          <select name="sortbyactors" class="form-control" id="sortbyactors" [(ngModel)]="sortByActor">
+            <option value="" selected aria-selected="true" [disabled]="true">Filter movies by actors</option>
+            <option value="{{ actor }}" *ngFor="let actor of mvService.actors" aria-selected="false">{{ actor }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
     <hr />
     <div class="row py-3">
-      <div
-        class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
-        *ngFor="let movie of filteredMovies"
-      >
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let movie of filteredMovies">
         <div class="card">
-          <img
-            [src]="movie.imageUrl"
-            class="card-img-top"
-            alt="placeholder image"
-          />
+          <img [src]="movie.imageUrl" class="card-img-top" alt="placeholder image" />
           <div class="card-body">
             <h5 class="card-title text-capitalize"><a [routerLink]="['/movies', movie.slug]">{{ 
               movie.title.length > 20 ?
@@ -37,22 +49,17 @@
             }}</a>
             </h5>
             <h6 class="card-subtitle text-muted my-2">
-              Release year: {{ movie.date }}
+              Release year: {{ movie.date.toDateString() }}
             </h6>
             <p class="card-text py-3">
               {{ movie.short_description }}
             </p>
-            <a
-              (click)="toggleVote(movie)"
-              [class.text-danger]="movieInFavorites(movie)"
-            >
+            <p>rated: {{ movie.rated }} stars</p>
+            <a (click)="toggleVote(movie)" [class.text-danger]="movieInFavorites(movie)" title="Add to favorites">
               <i class="material-icons">favorite</i>
             </a>
-            <a
-              [routerLink]="['/movies', movie.slug]"
-              class="card-link  float-right"
-              >see more</a
-            >
+            <a [routerLink]="['/movies', movie.slug]" class="card-link float-right" title="See more details ">More
+              details</a>
           </div>
         </div>
       </div>

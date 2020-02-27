@@ -1,66 +1,53 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { Observable } from 'rxjs';
+import getMovies, { IMovie, getActors } from './sampleData';
 // import { environment } from '../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
 
 // environment
-
-export interface IMovie {
-  title: string;
-  slug?: string;
-  imageUrl?: string;
-  imageUrlLarge?: string,
-  date: string;
-  short_description?: string;
-  description: string;
-  rated?: number;
-  released?: string;
-  runtime?: string;
-  genre?: string;
-  director?: string;
-  writer?: string;
-  actors?: string[];
-  plot?: string;
-  language?: string;
-  country?: string;
-  awards?: string[];
-}
+const store = localStorage;
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
   title = 'movies';
-  private movies: Observable<IMovie[]>;
+  private movies: IMovie[] = getMovies();
   private moviesUrl = environment.endpoint.movies;
   private favoriteMovies: IMovie[] = [];
 
-  constructor(private http: HttpClient) {
+  public actors = getActors();
+
+  private favSubjects$ = new BehaviorSubject<IMovie[]>(this.favoriteMovies);
+  favSubjectsChanged$ = this.favSubjects$.asObservable();
+
+  constructor(private toastr: ToastrService) {
     this.favoriteMovies =
       this.getFavoritesFromSession() !== null
         ? this.getFavoritesFromSession()
         : [];
+    this.favSubjects$.next(this.favoriteMovies);
   }
 
-  getAllMovies(): Observable<IMovie[]> {
-    this.movies = this.http.get<IMovie[]>(this.moviesUrl);
+  getAllMovies(): IMovie[] {
     return this.movies;
   }
 
-  getOneMovie(title: string): IMovie {
-    let movie: IMovie;
-    this.movies.subscribe(data => {
-      const outcome = data.filter(mv => mv.title === title);
-      movie = outcome && outcome[0];
-    });
-    console.log(movie);
-    return movie;
+  getOneMovie(slug: string): IMovie {
+    return this.movies.filter(mv => mv.slug === slug)[0];
   }
 
   addToFavorites(movie: IMovie): void {
     this.favoriteMovies.push(movie);
     this.addToSession();
+    this.favSubjects$.next(this.favoriteMovies);
+    this.toastr.success(
+      'Movie added',
+      `You added "${movie.title}" to favorites`
+    );
   }
 
   removeFromFavorites(movie: IMovie): void {
@@ -69,10 +56,15 @@ export class MoviesService {
       this.favoriteMovies.splice(i, 1);
       this.addToSession();
     }
+    this.favSubjects$.next(this.favoriteMovies);
+    this.toastr.warning(
+      'Movie removed',
+      `You removed "${movie.title}" from favorites`
+    );
   }
 
   addToSession(): void {
-    sessionStorage.setItem(this.title, JSON.stringify(this.favoriteMovies));
+    store.setItem(this.title, JSON.stringify(this.favoriteMovies));
   }
 
   movieInFavorites(movie: IMovie): boolean {
@@ -92,7 +84,7 @@ export class MoviesService {
   }
 
   getFavoritesFromSession(): null | IMovie[] {
-    const movies: null | string = sessionStorage.getItem(this.title);
+    const movies: null | string = store.getItem(this.title);
     if (movies !== null) {
       return JSON.parse(movies);
     } else {
@@ -103,29 +95,3 @@ export class MoviesService {
     return this.favoriteMovies;
   }
 }
-
-// export class ListService {
-//   private listUrl = environment.endpoint.list;
-
-//   constructor(private http: HttpClient) { }
-
-//   getListItems(): Observable<IListItem[]> {
-//     return this.http.get<IListItem[]>(this.listUrl);
-//   }
-
-//   addListItem(inputText: string): Observable<IListItem> {
-//     const httpOptions = {
-//       headers: new HttpHeaders({
-//         'Content-Type': 'application/json'
-//       })
-//     };
-//     const body = JSON.stringify({
-//       text: inputText
-//     });
-//     return this.http.post<IListItem>(this.listUrl, body, httpOptions);
-//   }
-
-//   deleteListItem(id: number): Observable<IListItem> {
-//     return this.http.delete<IListItem>(`${environment.endpoint.list}/${id}`);
-//   }
-// }

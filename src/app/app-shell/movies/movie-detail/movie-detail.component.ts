@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IMovie, MoviesService } from '../movies.service';
-
+import { MoviesService } from '../movies.service';
+import { IMovie } from '../sampleData';
 
 @Component({
   selector: 'app-movie-detail',
@@ -9,22 +9,16 @@ import { IMovie, MoviesService } from '../movies.service';
   styleUrls: ['./movie-detail.component.css']
 })
 export class MovieDetailComponent implements OnInit {
-  title = "Movie detail";
+  title = 'Movie detail';
   slug: string;
   movie: IMovie;
+  rating;
   constructor(private route: ActivatedRoute, private mvService: MoviesService) {
     this.slug = this.route.snapshot.paramMap.get('slug');
-    // this.title = this.slug;
   }
 
   ngOnInit() {
-    this.getOneMovie(this.slug);
-  }
-
-  getOneMovie(slug: string): void {
-    this.mvService.getAllMovies().subscribe(data => {
-      const outcome = data.filter(mv => mv.slug === slug);
-      this.movie = outcome && outcome[0];
-    });
+    this.movie = this.mvService.getOneMovie(this.slug);
+    this.rating = Array(this.movie.rated);
   }
 }

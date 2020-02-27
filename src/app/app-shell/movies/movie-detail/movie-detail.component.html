@@ -32,19 +32,14 @@
         <p class="title text-secondary">
           <strong>Released Date:</strong> {{ movie?.date }} <br />
           <strong>Runtime:</strong> {{ movie?.runtime }} <br />
-          <strong>Genre:</strong> {{ movie?.genre }} <br /><strong
-            >Language:</strong
-          >
+          <strong>Genre:</strong> {{ movie?.genre }} <br /><strong>Language:</strong>
           {{ movie?.language }} <br />
           <strong>Country:</strong> {{ movie?.country }}
         </p>
         <p class="title text-secondary">
           Rated:
-          <i class="material-icons">star</i>
-          <i class="material-icons">star</i>
-          <i class="material-icons">star</i>
-          <i class="material-icons">star</i>
-          <i class="material-icons">starhalf</i>
+          <i class="material-icons" *ngFor="let a of rating">star</i>
+          <i class="material-icons">starhalf</i> -->
         </p>
         <p class="description">
           <strong>Description:</strong> {{ movie?.short_description }}

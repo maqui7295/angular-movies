@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { MoviesService } from '../movies/movies.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,9 +9,11 @@ import { Location } from '@angular/common';
 })
 export class NavBarComponent implements OnInit {
   skipLinkPath: string;
-  constructor(private location: Location) { }
+  moviesLength: number;
+  constructor(private location: Location, private mvS: MoviesService) { }
 
   ngOnInit() {
     this.skipLinkPath = `${this.location.path()}#mainContent`;
+    this.mvS.favSubjectsChanged$.subscribe(data => this.moviesLength = data.length);
   }
 }
