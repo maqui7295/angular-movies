@@ -10,7 +10,7 @@ const routes: Routes = [
   // },
   {
     path: 'movies',
-    loadChildren: './app-shell/movies/movies.module#MoviesModule'
+    loadChildren: () => import('./app-shell/movies/movies.module').then(m => m.MoviesModule)
   }
 ];
 
